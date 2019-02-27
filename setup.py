@@ -22,8 +22,7 @@ setuptools.setup(
     ],
     install_requires=[
         'opencv-python',
-        'opencv-contrib-python',
-        'toml'
+        'opencv-contrib-python'
     ],
     extras_require={
         'gpu':  ["gputools"]
