@@ -257,20 +257,24 @@ def normalize_image(img):
 
 def checkerboard_score(corners, size=(9,6)):
     corners_reshaped = corners[:, :2].reshape(*size, 2)
-    ms = []
+    maxm = 0
     for rownum in range(size[0]):
         for colnum in range(1,size[1]-1):
             pts = corners_reshaped[rownum, [colnum-1, colnum, colnum+1]]
             top = np.linalg.norm(pts[2] + pts[0] - 2*pts[1])
             bot = np.linalg.norm(pts[2] - pts[0])
-            ms.append(top/bot)
+            if np.abs(bot) < 1e-9:
+                return 1
+            maxm = max(top/bot, maxm)
     for colnum in range(0,size[1]):
         for rownum in range(1, size[0]-1):
             pts = corners_reshaped[[rownum-1, rownum, rownum+1], colnum]
             top = np.linalg.norm(pts[2] + pts[0] - 2*pts[1])
             bot = np.linalg.norm(pts[2] - pts[0])
-            ms.append(top/bot)
-    return np.max(ms)
+            if np.abs(bot) < 1e-9:
+                return 1
+            maxm = max(top/bot, maxm)
+    return maxm
 
 def make_mask_line(shape, start, end, thickness=2):
     start = tuple([int(x) for x in start])
