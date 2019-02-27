@@ -290,8 +290,6 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
     corner_mid = corners_xy[ix_mid]
     dists, ixs = tree.query(corner_mid, k=7)
 
-    print(dists, ixs)
-
     dx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
     dy = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=3)
     dmag = np.abs(dx + dy*1j)
@@ -307,8 +305,6 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
 
     mags = np.array(mags) / np.max(mags)
 
-    # ax1, ax2 = axes
-    print(mags)
     corners_selected = corners_xy[ixs[1:]][mags > 0.7]
     mags = mags[mags > 0.7]
 
