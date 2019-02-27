@@ -351,7 +351,7 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
     return corners[ixs_best], d_best
 
 
-def detect_checkerboard(gray, size=(9,6), winsize=11):
+def detect_checkerboard(gray, size=(9,6), winsize=9):
     diff = normalize_image(gray)
     radiuses = [winsize+3]
     if winsize >= 8:
