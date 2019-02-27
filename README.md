@@ -3,6 +3,8 @@
 I could not find any libraries to find checkerboards robustly in Python, except for OpenCV.
 However, OpenCV's checkerboard tends to fail when the checkerboard is somewhat blurred or rotated.
 
+Hence, this library was born. It may be slightly slower than OpenCV, but it will *find* that checkerboard.
+
 ## References
 
 The implementation of checkerboard detection is mainly based on [libcbdetect](http://www.cvlibs.net/software/libcbdetect/) 
