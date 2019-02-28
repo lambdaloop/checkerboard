@@ -298,6 +298,8 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
     dy = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=3)
     dmag = np.abs(dx + dy*1j)
 
+    ixs = [i for i in ixs[1:] if i < corners_xy.shape[0]]
+
     mags = []
     for ix in ixs[1:]:
         mask = make_mask_line(
@@ -350,7 +352,7 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
                 start_best = start
 
 
-    return corners[ixs_best], d_best
+    return np.copy(corners[ixs_best]), d_best
 
 
 def detect_checkerboard(gray, size=(9,6), winsize=9):
