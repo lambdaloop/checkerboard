@@ -1,5 +1,8 @@
 # Checkerboard
 
+[![PyPI version](https://badge.fury.io/py/checkerboard.svg)](https://badge.fury.io/py/checkerboard)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+
 I could not find any libraries to find checkerboards robustly in Python, except for OpenCV.
 However, OpenCV's checkerboard tends to fail when the checkerboard is somewhat blurred or rotated.
 
