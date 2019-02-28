@@ -5,6 +5,9 @@ However, OpenCV's checkerboard tends to fail when the checkerboard is somewhat b
 
 Hence, this library was born. It may be slightly slower than OpenCV, but it will **find** that checkerboard.
 
+Comparison of OpenCV vs this library (OpenCV on the left, checkerboard on the right):
+![comparison](https://thumbs.gfycat.com/HomelyAccurateBettong.webp)
+
 ## Quickstart
 
 You can install checkerboard easily through pip:
