@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="checkerboard",
-    version="0.1.1",
+    version="0.1.2",
     author="Pierre Karashchuk",
     author_email="krchtchk@gmail.com",
     description="More robust checkerboard detection, similar algorithm to libcbdetect",
