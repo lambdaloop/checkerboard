@@ -5,6 +5,22 @@ However, OpenCV's checkerboard tends to fail when the checkerboard is somewhat b
 
 Hence, this library was born. It may be slightly slower than OpenCV, but it will **find** that checkerboard.
 
+## Quickstart
+
+You can install checkerboard easily through pip:
+```bash
+pip install checkerboard
+```
+
+Then you can go ahead and detect checkerboards like so:
+```python
+from checkerboard import detect_checkerboard
+
+size = (9, 6) # size of checkerboard
+image = ... # obtain checkerboard
+corners = detect_checkerboard(image, size)
+```
+
 ## References
 
 The implementation of checkerboard detection is mainly based on [libcbdetect](http://www.cvlibs.net/software/libcbdetect/) 
