@@ -366,7 +366,7 @@ def detect_checkerboard(gray, size=(9,6), winsize=9):
     corrb = cv2.GaussianBlur(corr, (7,7),3)
     corners = get_corner_candidates(corrb, winsize+2, np.max(corrb)*0.2)
     if len(corners) < size[0]*size[1]:
-        return None
+        return None, 1.0
 
     corners = non_maximum_suppression(corners, winsize-2)
     corners_sp = refine_corners(corners, diff, winsize=winsize+2)
@@ -404,6 +404,6 @@ def detect_checkerboard(gray, size=(9,6), winsize=9):
     if np.mean(corner_scores) < 0.2 or check_score > 0.3 \
        or len(best_corners) < num_corners \
        or max_dist > winsize*3:
-        return None
+        return None, 1.0
     else:
-        return np.copy(best_corners)
+        return np.copy(best_corners), check_score
