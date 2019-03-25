@@ -24,8 +24,17 @@ from checkerboard import detect_checkerboard
 
 size = (9, 6) # size of checkerboard
 image = ... # obtain checkerboard
-corners = detect_checkerboard(image, size)
+corners, score = detect_checkerboard(image, size)
 ```
+
+The `corners` returned are in the same format as the
+`findChessboardCorners` function from OpenCV, and are already computed
+to subpixel precision.
+
+The `score` returned is a metric of the quality of the checkerboard
+detection. A perfectly detected checkerboard would have a score of 0,
+whereas a bad detection would have a score of 1.
+
 
 ## References
 
