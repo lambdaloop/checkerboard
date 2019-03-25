@@ -355,7 +355,45 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
     return np.copy(corners[ixs_best]), d_best
 
 
-def detect_checkerboard(gray, size=(9,6), winsize=9):
+def trim_picture(gray):
+    laplace = cv2.Laplacian(gray, cv2.CV_64F)
+    laplace_blur = cv2.blur(np.abs(laplace), (100,100))
+
+    thres = np.percentile(laplace_blur, 92)
+
+    img_thres = np.uint8(laplace_blur > thres)
+    ret, labels, stats, centroids = cv2.connectedComponentsWithStats(img_thres)
+
+    best = np.argmax(stats[1:, 4]) + 1
+
+    mask = labels == best
+
+    if stats[best, 4] < 4000:
+        return None, None
+
+    mgrid = np.mgrid[:mask.shape[0], :mask.shape[1]]
+    lowy, lowx = np.min(mgrid[:, mask], axis=1)
+    highy, highx = np.max(mgrid[:, mask], axis=1)
+
+    lowy = max(lowy-50, 0)
+    highy = min(highy+50, mask.shape[0])
+    lowx = max(lowx-50, 0)
+    highx = min(highx+50, mask.shape[1])
+
+    gray = gray[lowy:highy,lowx:highx]
+
+    crop_start = np.array([lowx, lowy])
+
+    return gray, crop_start
+
+def detect_checkerboard(gray, size=(9,6), winsize=9, trim=False):
+    if trim:
+        gray, crop_start = trim_picture(gray)
+        if gray is None:
+            return None, 1.0
+    else:
+        crop_start = [0,0]
+
     diff = normalize_image(gray)
     radiuses = [winsize+3]
     if winsize >= 8:
@@ -402,8 +440,8 @@ def detect_checkerboard(gray, size=(9,6), winsize=9):
     # print('checkerboard score', check_score)
 
     corners_opencv = np.copy(best_corners[:, :2])
-    corners_opencv[:, 0] = best_corners[:, 1]
-    corners_opencv[:, 1] = best_corners[:, 0]
+    corners_opencv[:, 0] = best_corners[:, 1] + crop_start[1]
+    corners_opencv[:, 1] = best_corners[:, 0] + crop_start[0]
 
     corners_opencv = corners_opencv[:, None]
 
