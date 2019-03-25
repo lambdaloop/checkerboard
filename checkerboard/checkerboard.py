@@ -395,15 +395,21 @@ def detect_checkerboard(gray, size=(9,6), winsize=9):
         best_corners, max_dist = reorder_checkerboard(best_corners, diff)
         check_score = checkerboard_score(best_corners, size)
 
-    corner_scores = best_corners[:, :2]
+    corner_scores = best_corners[:, 2]
 
     # print('corner_scores', np.mean(corner_scores))
     # print('max dist', max_dist)
     # print('checkerboard score', check_score)
+
+    corners_opencv = np.copy(best_corners[:, :2])
+    corners_opencv[:, 0] = best_corners[:, 1]
+    corners_opencv[:, 1] = best_corners[:, 0]
+
+    corners_opencv = corners_opencv[:, None]
 
     if np.mean(corner_scores) < 0.2 or check_score > 0.3 \
        or len(best_corners) < num_corners \
        or max_dist > winsize*3:
         return None, 1.0
     else:
-        return np.copy(best_corners), check_score
+        return corners_opencv, check_score
