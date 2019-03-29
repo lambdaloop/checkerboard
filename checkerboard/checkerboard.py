@@ -355,6 +355,7 @@ def reorder_checkerboard(corners, gray, size=(9,6)):
     return np.copy(corners[ixs_best]), d_best
 
 
+## TODO: make this trimming better, it's pretty hacky right now
 def trim_picture(gray):
     laplace = cv2.Laplacian(gray, cv2.CV_64F)
     laplace_blur = cv2.blur(np.abs(laplace), (100,100))
@@ -416,6 +417,9 @@ def detect_checkerboard(gray, size=(9,6), winsize=9, trim=False):
     scores = corners_sp[:, 2]
 
     num_corners = size[0]*size[1]
+
+    if len(corners_sp) < size[0]*size[1]:
+        return None, 1.0
 
     best_ix = np.argsort(-scores)[:num_corners+3]
     best_corners = corners_sp[np.sort(best_ix)]
