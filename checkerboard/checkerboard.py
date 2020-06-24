@@ -423,7 +423,7 @@ def detect_checkerboard(gray, size=(9,6), winsize=9, trim=False):
 
     best_ix = np.argsort(-scores)[:num_corners+3]
     best_corners = corners_sp[np.sort(best_ix)]
-    best_corners, max_dist = reorder_checkerboard(best_corners, diff)
+    best_corners, max_dist = reorder_checkerboard(best_corners, diff, size)
 
     check_score = checkerboard_score(best_corners, size)
 
@@ -434,7 +434,7 @@ def detect_checkerboard(gray, size=(9,6), winsize=9, trim=False):
         # print('trying with extra points...')
         best_ix = np.argsort(-scores)[:num_corners+10]
         best_corners = corners_sp[np.sort(best_ix)]
-        best_corners, max_dist = reorder_checkerboard(best_corners, diff)
+        best_corners, max_dist = reorder_checkerboard(best_corners, diff, size)
         check_score = checkerboard_score(best_corners, size)
 
     # corner_scores = best_corners[:, 2]
