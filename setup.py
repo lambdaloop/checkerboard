@@ -21,8 +21,7 @@ setuptools.setup(
         "Topic :: Scientific/Engineering :: Image Recognition"
     ],
     install_requires=[
-        'opencv-python',
-        'opencv-contrib-python'
+        'opencv-python'
     ],
     extras_require={
         'gpu':  ["gputools"]
